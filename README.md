@@ -23,3 +23,47 @@ If you find this plugin useful and want to show your support then please **star 
 Adding new features, maintaining the plugin and responding to issues it's made in my spare time. I really appreciate any help you can give :)
 
 Thank you!
+
+## Fork additions
+
+### Reliable Art Mode (`art_retry`)
+
+> This is a fork addition (not in upstream `tavicu/homebridge-samsung-tizen`).
+
+Frame TVs frequently drop a single "set Art Mode" command — especially right
+after the panel wakes from standby — leaving the TV fully on instead of in Art
+Mode. This fork makes the Art Mode transition **idempotent and self-verifying**:
+after issuing the command it polls the live art-mode status over the existing
+art websocket and retries until the desired state is confirmed (or attempts run
+out). When the TV is asleep it powers it on, waits for the art-app socket to be
+ready, then converges.
+
+Configure per-device (or per-platform) with `art_retry`:
+
+```json
+{
+    "name": "Bedroom TV",
+    "ip": "10.20.30.40",
+    "mac": "A0:B1:C2:D3:E4:F5",
+    "options": ["Frame.RealPowerMode"],
+    "art_retry": {
+        "attempts": 5,
+        "interval": 1500,
+        "wake_timeout": 45000,
+        "settle": 1500
+    }
+}
+```
+
+| Key | Default | Description |
+| :--- | :--- | :--- |
+| `attempts` | `5` | How many times to issue the command and re-check before giving up. |
+| `interval` | `1500` | Delay (ms) between issuing a command and re-reading the status. |
+| `wake_timeout` | `45000` | Max time (ms) to wait for the art socket to be ready after waking from standby. |
+| `settle` | `1500` | Extra delay (ms) after the socket is ready before issuing the first command. |
+
+Shorthand forms are also accepted:
+
+- `"art_retry": 8` — set just the number of attempts, defaults for the rest.
+- `"art_retry": false` — disable verification entirely (legacy fire-and-forget behaviour).
+- Omit the key — uses the defaults above.
