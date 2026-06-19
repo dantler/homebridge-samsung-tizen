@@ -50,7 +50,9 @@ Configure per-device (or per-platform) with `art_retry`:
         "attempts": 5,
         "interval": 1500,
         "wake_timeout": 45000,
-        "settle": 1500
+        "settle": 1500,
+        "fallback_power": true,
+        "fallback_settle": 2000
     }
 }
 ```
@@ -61,6 +63,8 @@ Configure per-device (or per-platform) with `art_retry`:
 | `interval` | `1500` | Delay (ms) between issuing a command and re-reading the status. |
 | `wake_timeout` | `45000` | Max time (ms) to wait for the art socket to be ready after waking from standby. |
 | `settle` | `1500` | Extra delay (ms) after the socket is ready before issuing the first command. |
+| `fallback_power` | `true` | Send a short `KEY_POWER` click when turning Art Mode on cannot be verified through the art websocket. |
+| `fallback_settle` | `2000` | Delay (ms) after the `KEY_POWER` fallback before re-reading the status. |
 
 Shorthand forms are also accepted:
 

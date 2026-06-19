@@ -357,6 +357,19 @@
                                     "minimum": 0,
                                     "default": 1500,
                                     "description": "Extra delay after the socket is ready before issuing the first art command."
+                                },
+                                "fallback_power": {
+                                    "title": "Fallback to power button",
+                                    "type": "boolean",
+                                    "default": true,
+                                    "description": "When turning Art Mode on cannot be verified through the art websocket, send a short KEY_POWER click as a Frame TV fallback."
+                                },
+                                "fallback_settle": {
+                                    "title": "Fallback settle delay (ms)",
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "default": 2000,
+                                    "description": "Delay after the KEY_POWER fallback before re-reading the art-mode status."
                                 }
                             }
                         }
@@ -395,6 +408,19 @@
                         "minimum": 0,
                         "default": 1500,
                         "description": "Extra delay after the socket is ready before issuing the first art command."
+                    },
+                    "fallback_power": {
+                        "title": "Fallback to power button",
+                        "type": "boolean",
+                        "default": true,
+                        "description": "When turning Art Mode on cannot be verified through the art websocket, send a short KEY_POWER click as a Frame TV fallback."
+                    },
+                    "fallback_settle": {
+                        "title": "Fallback settle delay (ms)",
+                        "type": "integer",
+                        "minimum": 0,
+                        "default": 2000,
+                        "description": "Delay after the KEY_POWER fallback before re-reading the art-mode status."
                     }
                 }
             }
